@@ -1,5 +1,8 @@
-# react-native-web-maps
-> React Native for Web implementation of react-native-maps
+# react-native-web-google-maps
+
+Fork of [react-native-web-maps](https://github.com/react-native-web-community/react-native-web-maps)
+
+React Native for Web implementation of react-native-maps using @react-google-maps/api
 
 ## Getting started
 `$ npm install react-native-web-maps --save`

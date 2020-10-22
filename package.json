@@ -1,12 +1,12 @@
 {
-  "name": "react-native-web-maps",
+  "name": "react-native-web-google-maps",
   "version": "0.3.0",
   "description": "React Native for Web implementation of react-native-maps",
   "main": "dist/index.js",
   "main-es": "src/index.js",
   "repository": {
     "type": "git",
-    "url": "git@github.com:react-native-web-community/react-native-web-maps.git"
+    "url": "git@github.com:robert-w-gries/react-native-web-maps.git"
   },
   "author": {
     "name": "Aurore Malherbes",
@@ -20,14 +20,21 @@
     "react-native-web-maps"
   ],
   "scripts": {
-    "prepublish": "yarn build",
-    "build": "mkdir -p dist && babel src --out-dir dist",
-    "test:lint": "yarn eslint . --quiet",
-    "test": "yarn test:lint"
+    "type-check": "tsc --noEmit",
+    "type-check:watch": "yarn run type-check -- --watch",
+    "build": "yarn run build:types && npm run build:js",
+    "build:types": "tsc --emitDeclarationOnly",
+    "build:js": "babel src --out-dir dist --extensions \".ts,.tsx\" --source-maps inline"
   },
   "babel": {
     "presets": [
-      "react-native"
+      "@babel/env",
+      "@babel/react",
+      "@babel/typescript",
+      "module:metro-react-native-babel-preset"
+    ],
+    "plugins": [
+      "@babel/plugin-proposal-class-properties"
     ]
   },
   "files": [
@@ -36,22 +43,34 @@
     "yarn.lock"
   ],
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.0",
-    "babel-loader": "^7.1.2",
-    "babel-preset-react-native": "^4.0.0",
-    "eslint": "^5.15.3",
-    "eslint-config-bambi": "^1.4.0",
+    "@babel/cli": "^7.12.1",
+    "@babel/core": "^7.12.3",
+    "@babel/plugin-proposal-class-properties": "^7.12.1",
+    "@babel/preset-env": "^7.12.1",
+    "@babel/preset-react": "^7.12.1",
+    "@babel/preset-typescript": "^7.12.1",
+    "@types/react": "^16.9.53",
+    "@types/react-dom": "^16.9.8",
+    "@types/react-native": "^0.63.27",
+    "@typescript-eslint/eslint-plugin": "^4.5.0",
+    "@typescript-eslint/parser": "^4.5.0",
+    "eslint": "^7.11.0",
+    "metro-react-native-babel-preset": "^0.63.0",
     "prettier": "^1.16.4",
-    "react": "^16.0.0",
-    "react-dom": "^16.0.0",
-    "react-native-web": "^0.1.1",
-    "webpack": "^3.6.0"
+    "react": "16.13.1",
+    "react-dom": "16.13.1",
+    "react-native": "^0.63",
+    "react-native-maps": "^0.27.1",
+    "react-native-web": "^0.14.3",
+    "typescript": "^4.0.3"
   },
   "peerDependencies": {
-    "react-native-web": "*"
+    "react": "16.13.1",
+    "react-dom": "16.13.1",
+    "react-native": "^0.63",
+    "react-native-web": "^0.14.3"
   },
   "dependencies": {
-    "react-google-maps": "^9.4.5"
+    "@react-google-maps/api": "^1.13.0"
   }
 }
