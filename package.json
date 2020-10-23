@@ -1,23 +1,24 @@
 {
   "name": "react-native-web-google-maps",
-  "version": "0.3.0",
+  "version": "0.1.0",
   "description": "React Native for Web implementation of react-native-maps",
   "main": "dist/index.js",
   "main-es": "src/index.js",
   "repository": {
     "type": "git",
-    "url": "git@github.com:robert-w-gries/react-native-web-maps.git"
+    "url": "git@github.com:robert-w-gries/react-native-web-google-maps.git"
   },
   "author": {
-    "name": "Aurore Malherbes",
-    "email": "aurorem@bam.tech",
-    "url": "https://github.com/aurorem"
+    "name": "Rob Gries",
+    "email": "robert.w.gries@gmail.com",
+    "url": "https://github.com/robert-w-gries"
   },
   "license": "MIT",
   "keywords": [
     "react-native",
     "react-native-web",
-    "react-native-web-maps"
+    "react-native-web-maps",
+    "react-native-web-google-maps"
   ],
   "scripts": {
     "type-check": "tsc --noEmit",
@@ -56,6 +57,8 @@
     "@typescript-eslint/eslint-plugin": "^4.5.0",
     "@typescript-eslint/parser": "^4.5.0",
     "eslint": "^7.11.0",
+    "eslint-config-prettier": "^6.14.0",
+    "eslint-plugin-prettier": "^3.1.4",
     "metro-react-native-babel-preset": "^0.63.0",
     "prettier": "^1.16.4",
     "react": "16.13.1",

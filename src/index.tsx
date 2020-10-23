@@ -1,24 +1,45 @@
-import * as React from 'react';
-import { Camera, MapViewProps, Region } from 'react-native-maps';
-import { useJsApiLoader, GoogleMap } from '@react-google-maps/api';
+import * as React from "react";
+import { Camera, MapViewProps, Region } from "react-native-maps";
+import {
+  useJsApiLoader,
+  GoogleMap,
+  GoogleMapProps
+} from "@react-google-maps/api";
+import Marker from "./marker";
 
-interface WebMapViewProps extends MapViewProps{
-  children?: React.ReactNode,
-  googleMapsApiKey: string,
+interface WebMapViewProps extends MapViewProps {
+  children?: React.ReactNode;
+  googleMapsApiKey: string;
 }
 
-export default function MapView({ children, googleMapsApiKey, ...props }: WebMapViewProps) {
+function mapToApiProps(inProps: MapViewProps): GoogleMapProps {
+  return {
+    center: getCenter(
+      inProps.camera,
+      inProps.initialCamera,
+      inProps.region,
+      inProps.initialRegion
+    ),
+    zoom: inProps.camera ? inProps.camera.zoom : 0,
+    tilt: inProps.camera ? inProps.camera.pitch : 0,
+    heading: inProps.camera ? inProps.camera.heading : 0,
+    mapContainerStyle:
+      (inProps.style as React.CSSProperties) || styles.container,
+    onLoad: inProps.onMapReady
+  };
+}
+
+export default function MapView({
+  children,
+  googleMapsApiKey,
+  ...props
+}: WebMapViewProps): React.ReactNode {
   const { isLoaded, loadError } = useJsApiLoader({
-    googleMapsApiKey,
+    googleMapsApiKey
   });
 
-  const center = getCenter(props.camera, props.initialCamera, props.region, props.initialRegion);
-  const zoom = props.camera ? props.camera.zoom : 0;
-  const tilt = props.camera ? props.camera.pitch : 0;
   const renderMap = () => (
-    <GoogleMap center={center} zoom={zoom} tilt={tilt} onLoad={props.onMapReady}>
-      {children}
-    </GoogleMap>
+    <GoogleMap {...mapToApiProps(props)}>{children}</GoogleMap>
   );
 
   if (loadError) {
@@ -29,11 +50,19 @@ export default function MapView({ children, googleMapsApiKey, ...props }: WebMap
   return isLoaded ? renderMap() : null;
 }
 
-function getCenter(camera?: Camera, initialCamera?: Camera, region?: Region, initialRegion?: Region): google.maps.LatLngLiteral | undefined {
+function getCenter(
+  camera?: Camera,
+  initialCamera?: Camera,
+  region?: Region,
+  initialRegion?: Region
+): google.maps.LatLngLiteral | undefined {
   if (camera) {
     return { lat: camera.center.latitude, lng: camera.center.longitude };
   } else if (initialCamera) {
-    return { lat: initialCamera.center.latitude, lng: initialCamera.center.longitude };
+    return {
+      lat: initialCamera.center.latitude,
+      lng: initialCamera.center.longitude
+    };
   } else if (region) {
     return { lat: region.latitude, lng: region.longitude };
   } else if (initialRegion) {
@@ -41,7 +70,11 @@ function getCenter(camera?: Camera, initialCamera?: Camera, region?: Region, ini
   }
 }
 
-/*MapView.Marker = Marker;
-MapView.Polyline = Polyline;
-MapView.Callout = Callout;
-*/
+const styles = {
+  container: {
+    height: "100%",
+    width: "100%"
+  }
+};
+
+export { Marker };
