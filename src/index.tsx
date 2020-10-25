@@ -5,6 +5,7 @@ import {
   GoogleMap,
   GoogleMapProps
 } from "@react-google-maps/api";
+import Callout from "./callout";
 import Marker from "./marker";
 
 interface WebMapViewProps extends MapViewProps {
@@ -77,4 +78,4 @@ const styles = {
   }
 };
 
-export { Marker };
+export { Callout, Marker };
